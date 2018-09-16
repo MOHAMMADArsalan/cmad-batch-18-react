@@ -4,18 +4,42 @@ import Input from './components/Input';
 import Button from './components/Button';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      user1: 'User 1',
+      user2: ' USer 2',
+    };
+  }
+
+  onInputHandler = event => {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
   render() {
+    console.log(this.state);
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-        <Input ></Input>
-        <Button text="Button 1" className="btn btn-primary"/>
-        <Button text="Button 2" className="btn btn-secondary"/>
-        <Button text="Button 3" className="btn btn-danger"/>
-        </p>
+        <form>
+          <Input
+            name="user1"
+            inputHandler={this.onInputHandler}
+            value={this.state.user1}
+            label="User 1"
+            placeholder="User 1 Name"
+          />
+          <Input
+            name="user2"
+            inputHandler={this.onInputHandler}
+            value={this.state.user2}
+            label="User 2"
+            placeholder="User 2 Name"
+          />
+          <Button text="Submit" className="btn btn-primary" />
+        </form>
       </div>
     );
   }
