@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import Input from './components/Input';
 import Button from './components/Button';
-
+import { getUserData } from './config/helper';
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      user1: 'User 1',
-      user2: ' USer 2',
+      user1: '',
+      user2: '',
+      isDone: false,
     };
   }
 
@@ -20,10 +21,16 @@ class App extends Component {
     });
   };
   render() {
-    console.log(this.state);
+    if (this.state.isDone) {
+      return (
+        <div>
+          <Button text="Rematch" onClick={this.reStart} />
+        </div>
+      );
+    }
     return (
       <div className="App">
-        <form>
+        <form onSubmit={this.getUserDataHandler}>
           <Input
             name="user1"
             inputHandler={this.onInputHandler}
@@ -43,6 +50,50 @@ class App extends Component {
       </div>
     );
   }
+
+  reStart = () => {
+    this.setState({
+      isDone: false,
+    });
+  };
+  getUserDataHandler = event => {
+    event.preventDefault();
+
+    if (this.state.user1 === '' || this.state.user2 === '') {
+      alert('Please fill this form');
+      return;
+    }
+    const usersData = Promise.all([
+      getUserData(this.state.user1),
+      getUserData(this.state.user2),
+    ]);
+
+    usersData
+      .then(res => {
+        this.setState({
+          isDone: true,
+        });
+
+        // total 
+        //following
+        //follower
+        //public_repos
+        //public_gists
+        console.log(res);
+      })
+      .catch(error => console.log(error));
+    // getUserData(this.state.user1)
+    //   .then(user1 => {
+    //     console.log('Start Second call');
+    //     getUserData(this.state.user2)
+    //       .then(user2 => console.log(user1, user2))
+    //       .catch(error => console.error(error));
+    //   })
+    //   .catch(error => console.error(error));
+
+    //https://api.github.com/users/userId
+    console.log(this.state);
+  };
 }
 
 export default App;
