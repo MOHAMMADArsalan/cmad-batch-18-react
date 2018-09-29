@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Human {
+      constructor(name,age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      eating() {
+        alert(this.name + " is eating");
+      }
+    }
+  
+    class User extends Human {
+      constructor (name,age,email) {
+        super(name,age);
+        this.email = email;
+        
+      }
+    }
+
+
+    const human1 = new Human('Human 1' , 25);
+
+    console.log(human1.eating());
+
+    const user1 = new User('User 1', 26, 'user1@gmail.com');
+    console.log(user1)
+    </script>
+</body>
+</html>
